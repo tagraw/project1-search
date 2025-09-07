@@ -87,18 +87,58 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    stack = util.Stack()
+    visited = set()
+
+    startState = problem.getStartState()
+
+    # current position and the path to take 
+    stack.push((startState, [])) 
+    while not stack.isEmpty():
+        state = stack.pop()
+
+        if problem.isGoalState(state[0]):
+            return state[1]
+        
+        if state[0] not in visited:
+            visited.add(state[0])
+            for successor in problem.getSuccessors(state[0]):
+                #takes the current path and adds the first successor that is not visited
+                newPath = state[1] + [successor[1]]
+                stack.push((successor[0], newPath))
+
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+
+    queue = util.Queue()
+    visited = set()
+
+    stateState = problem.getStartState()
+    # current position and the path to take 
+    queue.push((stateState, []))
+
+    while not queue.isEmpty():
+        state = queue.pop()
+
+        if problem.isGoalState(state[0]):
+            return state[1]
+        
+        if state[0] not in visited:
+            visited.add(state[0])
+            for successor in problem.getSuccessors(state[0]):
+                #takes the current path and adds the first successor that is not visited
+                newPath = state[1] + [successor[1]]
+                queue.push((successor[0], newPath))
+
+
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
     util.raiseNotDefined()
-
+    
 def nullHeuristic(state, problem=None):
     """
     A heuristic function estimates the cost from the current state to the nearest
