@@ -186,6 +186,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
             costG = state[2] + successor[2]
             #never visited or found a better path
             if successor[0] not in best or costG < best[successor[0]]:
+                #min algo for g values
                 best[successor[0]] = costG
                 newPath = state[1] + [successor[1]]
                 pQueue.push((successor[0], newPath, costG), costG + heuristic(successor[0], problem))
