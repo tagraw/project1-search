@@ -88,50 +88,14 @@ def depthFirstSearch(problem):
     """
     "*** YOUR CODE HERE ***"
     stack = util.Stack()
-    visited = set()
-
-    startState = problem.getStartState()
-
-    # current position and the path to take 
-    stack.push((startState, [])) 
-    while not stack.isEmpty():
-        state = stack.pop()
-
-        if problem.isGoalState(state[0]):
-            return state[1]
-        
-        if state[0] not in visited:
-            visited.add(state[0])
-            for successor in problem.getSuccessors(state[0]):
-                #takes the current path and adds the first successor that is not visited
-                newPath = state[1] + [successor[1]]
-                stack.push((successor[0], newPath))
-
+    return searchHelperBFSDFS(problem, stack)
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
 
     queue = util.Queue()
-    visited = set()
-
-    startState = problem.getStartState()
-    # current position and the path to take 
-    queue.push((startState, []))
-
-    while not queue.isEmpty():
-        state = queue.pop()
-
-        if problem.isGoalState(state[0]):
-            return state[1]
-        
-        if state[0] not in visited:
-            visited.add(state[0])
-            for successor in problem.getSuccessors(state[0]):
-                #takes the current path and adds the first successor that is not visited
-                newPath = state[1] + [successor[1]]
-                queue.push((successor[0], newPath))
-
+    return searchHelperBFSDFS(problem, queue)
 
 
 def uniformCostSearch(problem):
@@ -159,6 +123,23 @@ def uniformCostSearch(problem):
                 #takes the cost of a path + the cost currently
                 newCost = state[2] + successor[2]
                 pQueue.push((successor[0], newPath, newCost), newCost)
+
+def searchHelperBFSDFS(problem, fringe):
+    visited = set()
+    fringe.push((problem.getStartState(), []))
+
+    while not fringe.isEmpty():
+        state = fringe.pop()
+
+        if problem.isGoalState(state[0]):
+            return state[1]
+        
+        if state[0] not in visited:
+            visited.add(state[0])
+            for successor in problem.getSuccessors(state[0]):
+                #takes the current path and adds the first successor that is not visited
+                newPath = state[1] + [successor[1]]
+                fringe.push((successor[0], newPath))
 
 
 def nullHeuristic(state, problem=None):
